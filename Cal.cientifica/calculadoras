@@ -1,0 +1,150 @@
+#include <stdio.h>
+#include <stdbool.h>
+#include <math.h>
+
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+
+int main() {
+    int escolha;
+    float num1, num2;
+    float result;
+    bool valido = true;
+
+    printf("\n 1 - Somar\n 2 - Subtrair\n 3 - Multiplicar\n 4 - Dividir");
+    printf("\n 5 - Exponenciacao\n 6 - Raiz Quadrada\n 7 - Raiz Cubica");
+    printf("\n 8 - Pi\n 9 - Seno\n 10 - Cosseno\n 11 - Tangente");
+    printf("\n 12 - Logaritmo natural\n 13 - Logaritmo base 10\n 14 - Valor Absoluto");
+    printf("\n 15 - Arredondar\n 16 - Teto\n 17 - Piso\n 18 - Hipotenusa");
+    printf("\n 19 - Fatorial\n 20 - Inverso\n");
+
+    printf("\nDigite sua escolha:\n");
+    scanf("%d", &escolha);
+
+    // Escolhas que precisam de dois números
+    if (escolha == 1 || escolha == 2 || escolha == 3 || escolha == 4 ||
+        escolha == 5 || escolha == 18) {
+        printf("Digite o primeiro numero:\n");
+        scanf("%f", &num1);
+        printf("Digite o segundo numero:\n");
+        scanf("%f", &num2);
+    } 
+    // Escolhas que precisam de apenas um número
+    else if ((escolha >= 6 && escolha <= 7) || (escolha >= 9 && escolha <= 17) || escolha == 20) {
+        printf("Digite o numero:\n");
+        scanf("%f", &num1);
+    } 
+    // Fatorial
+    else if (escolha == 19) {
+        printf("Digite um numero inteiro:\n");
+        scanf("%f", &num1);
+    }
+
+    switch (escolha) {
+        case 1:
+            result = num1 + num2;
+            break;
+        case 2:
+            result = num1 - num2;
+            break;
+        case 3:
+            result = num1 * num2;
+            break;
+        case 4:
+            if (num2 == 0) {
+                printf("Nao e possivel dividir por 0!\n");
+                valido = false;
+            } else {
+                result = num1 / num2;
+            }
+            break;
+        case 5:
+            if (num1 == 0 && num2 == 0) {
+                printf("0 elevado a 0 e uma indeterminacao!\n");
+                valido = false;
+            } else {
+                result = pow(num1, num2);
+            }
+            break;
+        case 6:
+            result = sqrt(num1);
+            break;
+        case 7:
+            result = cbrt(num1);
+            break;
+        case 8:
+            result = M_PI;
+            break;
+        case 9:
+            result = sin(num1);
+            break;
+        case 10:
+            result = cos(num1);
+            break;
+        case 11:
+            result = tan(num1);
+            break;
+        case 12:
+            if(num1 <= 0) {
+                printf("Logaritmo de numero nao positivo nao e definido!\n");
+                valido = false;
+            } else {
+                result = log(num1);
+            }
+            break;
+        case 13:
+            if(num1 <= 0) {
+                printf("Logaritmo de numero nao positivo nao e definido!\n");
+                valido = false;
+            } else {
+                result = log10(num1);
+            }
+            break;
+        case 14:
+            result = fabs(num1);
+            break;
+        case 15:
+            result = round(num1);
+            break;
+        case 16:
+            result = ceil(num1);
+            break;
+        case 17:
+            result = floor(num1);
+            break;
+        case 18:
+            result = hypot(num1, num2);
+            break;
+        case 19: {
+            if (num1 < 0) {
+                printf("Fatorial de numero negativo nao e definido!\n");
+                valido = false;
+                break;
+            }
+            result = 1;
+            for(int i=1; i<= (int)num1; i++) {
+                result *= i;
+            }
+            break;
+        }
+        case 20:
+            if(num1 == 0) {
+                printf("Nao e possivel calcular o inverso de 0!\n");
+                valido = false;
+            } else {
+                result = 1/num1;
+            }
+            break;
+        default:
+            printf("Escolha indisponivel!\n");
+            valido = false;
+            break;
+    }
+
+    if(valido) {
+        printf("O resultado e: %f\n", result);
+    }
+
+    return 0;
+}
