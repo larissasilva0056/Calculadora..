@@ -1,0 +1,282 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+
+#define MAX_OPERACOES 50
+
+typedef struct {
+    char tipo[20];
+    double a;
+    double b;
+    double resultado;
+    int id;
+} Operacao;
+
+// Histórico
+Operacao historico[MAX_OPERACOES];
+int contadorHistorico = 0;
+
+// ---------- Funções básicas ----------
+double soma(double a, double b) { return a + b; }
+double subtracao(double a, double b) { return a - b; }
+double multiplicacao(double a, double b) { return a * b; }
+double divisao(double a, double b) {
+    if(b == 0) {
+        printf("Erro: divisão por zero!\n");
+        return NAN;
+    }
+    return a / b;
+}
+
+// ---------- Funções adicionais ----------
+double potencia(double a, double b) { return pow(a, b); }
+double raiz(double a) { return a < 0 ? NAN : sqrt(a); }
+double fatorial(int n) {
+    if(n < 0) return NAN;
+    double f = 1;
+    for(int i=1; i<=n; i++) f *= i;
+    return f;
+}
+
+double media(double arr[], int n) {
+    double soma = 0;
+    for(int i=0;i<n;i++) soma += arr[i];
+    return soma/n;
+}
+
+double mediana(double arr[], int n) {
+    // Bubble sort simples
+    for(int i=0;i<n-1;i++) {
+        for(int j=0;j<n-i-1;j++) {
+            if(arr[j] > arr[j+1]) {
+                double tmp = arr[j];
+                arr[j] = arr[j+1];
+                arr[j+1] = tmp;
+            }
+        }
+    }
+    if(n%2==0) return (arr[n/2 -1] + arr[n/2])/2;
+    else return arr[n/2];
+}
+
+double desvioPadrao(double arr[], int n) {
+    double m = media(arr,n);
+    double soma = 0;
+    for(int i=0;i<n;i++) soma += pow(arr[i]-m,2);
+    return sqrt(soma/n);
+}
+
+double maximo(double a, double b) { return a>b ? a:b; }
+double minimo(double a, double b) { return a<b ? a:b; }
+
+// Funções matemáticas especiais
+int mdc(int a, int b) {
+    while(b != 0) {
+        int r = a % b;
+        a = b;
+        b = r;
+    }
+    return a;
+}
+
+int mmc(int a, int b) {
+    return a / mdc(a,b) * b;
+}
+
+double logaritmo(double a) {
+    if(a <= 0) {
+        printf("Erro: logaritmo de número não positivo!\n");
+        return NAN;
+    }
+    return log(a);
+}
+
+double seno(double a) { return sin(a); }
+double cosseno(double a) { return cos(a); }
+double tangente(double a) { return tan(a); }
+
+double grausParaRadianos(double g) { return g * M_PI / 180.0; }
+double radianosParaGraus(double r) { return r * 180.0 / M_PI; }
+
+// ---------- Matrizes 2x2 ----------
+void somaMatriz(double a[2][2], double b[2][2], double res[2][2]) {
+    for(int i=0;i<2;i++)
+        for(int j=0;j<2;j++)
+            res[i][j] = a[i][j]+b[i][j];
+}
+
+void multiplicaMatriz(double a[2][2], double b[2][2], double res[2][2]) {
+    for(int i=0;i<2;i++) {
+        for(int j=0;j<2;j++) {
+            res[i][j]=0;
+            for(int k=0;k<2;k++)
+                res[i][j]+=a[i][k]*b[k][j];
+        }
+    }
+}
+
+// ---------- Histórico ----------
+void adicionarHistorico(char *tipo, double a, double b, double resultado) {
+    if(contadorHistorico >= MAX_OPERACOES) contadorHistorico = 0;
+    historico[contadorHistorico].id = contadorHistorico+1;
+    strcpy(historico[contadorHistorico].tipo, tipo);
+    historico[contadorHistorico].a = a;
+    historico[contadorHistorico].b = b;
+    historico[contadorHistorico].resultado = resultado;
+    contadorHistorico++;
+}
+
+void mostrarHistorico() {
+    printf("\n--- Histórico ---\n");
+    for(int i=0;i<contadorHistorico;i++) {
+        printf("[%d] %s: %.2lf e %.2lf = %.2lf\n", historico[i].id, historico[i].tipo, historico[i].a, historico[i].b, historico[i].resultado);
+    }
+}
+
+// ---------- Menu principal ----------
+void menu() {
+    int opcao;
+    do {
+        printf("\n--- Calculadora Científica ---\n");
+        printf("1. Soma\n2. Subtração\n3. Multiplicação\n4. Divisão\n");
+        printf("5. Potência\n6. Raiz\n7. Fatorial\n8. Média\n9. Mediana\n10. Desvio-padrão\n");
+        printf("11. Máximo\n12. Mínimo\n13. MDC\n14. MMC\n15. Logaritmo\n");
+        printf("16. Seno\n17. Cosseno\n18. Tangente\n19. Conversões graus/radianos\n");
+        printf("20. Matrizes 2x2\n21. Histórico\n0. Sair\n");
+        printf("Escolha uma opção: ");
+        scanf("%d", &opcao);
+        
+        double x, y;
+        int n;
+        double arr[100];
+        double matrizA[2][2], matrizB[2][2], matrizRes[2][2];
+        switch(opcao) {
+            case 1: 
+                printf("Digite dois números: "); scanf("%lf %lf",&x,&y);
+                printf("Resultado: %.2lf\n", soma(x,y));
+                adicionarHistorico("Soma",x,y,soma(x,y));
+                break;
+            case 2:
+                printf("Digite dois números: "); scanf("%lf %lf",&x,&y);
+                printf("Resultado: %.2lf\n", subtracao(x,y));
+                adicionarHistorico("Subtração",x,y,subtracao(x,y));
+                break;
+            case 3:
+                printf("Digite dois números: "); scanf("%lf %lf",&x,&y);
+                printf("Resultado: %.2lf\n", multiplicacao(x,y));
+                adicionarHistorico("Multiplicação",x,y,multiplicacao(x,y));
+                break;
+            case 4:
+                printf("Digite dois números: "); scanf("%lf %lf",&x,&y);
+                printf("Resultado: %.2lf\n", divisao(x,y));
+                adicionarHistorico("Divisão",x,y,divisao(x,y));
+                break;
+            case 5:
+                printf("Base e expoente: "); scanf("%lf %lf",&x,&y);
+                printf("Resultado: %.2lf\n", potencia(x,y));
+                adicionarHistorico("Potência",x,y,potencia(x,y));
+                break;
+            case 6:
+                printf("Número: "); scanf("%lf",&x);
+                printf("Resultado: %.2lf\n", raiz(x));
+                adicionarHistorico("Raiz",x,0,raiz(x));
+                break;
+            case 7:
+                printf("Número inteiro: "); scanf("%d",&n);
+                printf("Resultado: %.2lf\n", fatorial(n));
+                adicionarHistorico("Fatorial",n,0,fatorial(n));
+                break;
+            case 8:
+                printf("Quantos números? "); scanf("%d",&n);
+                for(int i=0;i<n;i++) { printf("Número %d: ",i+1); scanf("%lf",&arr[i]); }
+                printf("Resultado: %.2lf\n", media(arr,n));
+                adicionarHistorico("Média",arr[0],arr[1],media(arr,n));
+                break;
+            case 9:
+                printf("Quantos números? "); scanf("%d",&n);
+                for(int i=0;i<n;i++) { printf("Número %d: ",i+1); scanf("%lf",&arr[i]); }
+                printf("Resultado: %.2lf\n", mediana(arr,n));
+                adicionarHistorico("Mediana",arr[0],arr[1],mediana(arr,n));
+                break;
+            case 10:
+                printf("Quantos números? "); scanf("%d",&n);
+                for(int i=0;i<n;i++) { printf("Número %d: ",i+1); scanf("%lf",&arr[i]); }
+                printf("Resultado: %.2lf\n", desvioPadrao(arr,n));
+                adicionarHistorico("Desvio Padrão",arr[0],arr[1],desvioPadrao(arr,n));
+                break;
+            case 11:
+                printf("Digite dois números: "); scanf("%lf %lf",&x,&y);
+                printf("Resultado: %.2lf\n", maximo(x,y));
+                adicionarHistorico("Máximo",x,y,maximo(x,y));
+                break;
+            case 12:
+                printf("Digite dois números: "); scanf("%lf %lf",&x,&y);
+                printf("Resultado: %.2lf\n", minimo(x,y));
+                adicionarHistorico("Mínimo",x,y,minimo(x,y));
+                break;
+            case 13:
+                printf("Digite dois inteiros: "); scanf("%d %d",&n,&(int){x});
+                printf("Resultado: %d\n", mdc(n,(int)x));
+                adicionarHistorico("MDC",n,x,mdc(n,(int)x));
+                break;
+            case 14:
+                printf("Digite dois inteiros: "); scanf("%d %d",&n,&(int){x});
+                printf("Resultado: %d\n", mmc(n,(int)x));
+                adicionarHistorico("MMC",n,x,mmc(n,(int)x));
+                break;
+            case 15:
+                printf("Digite número: "); scanf("%lf",&x);
+                printf("Resultado: %.2lf\n", logaritmo(x));
+                adicionarHistorico("Log",x,0,logaritmo(x));
+                break;
+            case 16:
+                printf("Digite ângulo em radianos: "); scanf("%lf",&x);
+                printf("Resultado: %.2lf\n", seno(x));
+                adicionarHistorico("Seno",x,0,seno(x));
+                break;
+            case 17:
+                printf("Digite ângulo em radianos: "); scanf("%lf",&x);
+                printf("Resultado: %.2lf\n", cosseno(x));
+                adicionarHistorico("Cosseno",x,0,cosseno(x));
+                break;
+            case 18:
+                printf("Digite ângulo em radianos: "); scanf("%lf",&x);
+                printf("Resultado: %.2lf\n", tangente(x));
+                adicionarHistorico("Tangente",x,0,tangente(x));
+                break;
+            case 19:
+                printf("1. Graus → Radianos\n2. Radianos → Graus\nEscolha: "); scanf("%d",&n);
+                if(n==1) { printf("Graus: "); scanf("%lf",&x); printf("Radianos: %.2lf\n", grausParaRadianos(x)); }
+                else { printf("Radianos: "); scanf("%lf",&x); printf("Graus: %.2lf\n", radianosParaGraus(x)); }
+                break;
+            case 20:
+                printf("Digite matriz A 2x2:\n");
+                for(int i=0;i<2;i++)
+                    for(int j=0;j<2;j++) scanf("%lf",&matrizA[i][j]);
+                printf("Digite matriz B 2x2:\n");
+                for(int i=0;i<2;i++)
+                    for(int j=0;j<2;j++) scanf("%lf",&matrizB[i][j]);
+                somaMatriz(matrizA,matrizB,matrizRes);
+                printf("Soma:\n");
+                for(int i=0;i<2;i++){ for(int j=0;j<2;j++) printf("%.2lf ",matrizRes[i][j]); printf("\n"); }
+                multiplicaMatriz(matrizA,matrizB,matrizRes);
+                printf("Multiplicação:\n");
+                for(int i=0;i<2;i++){ for(int j=0;j<2;j++) printf("%.2lf ",matrizRes[i][j]); printf("\n"); }
+                break;
+            case 21:
+                mostrarHistorico();
+                break;
+            case 0:
+                printf("Saindo...\n");
+                break;
+            default:
+                printf("Opção inválida!\n");
+        }
+    } while(opcao != 0);
+}
+
+int main() {
+    menu();
+    return 0;
+}
