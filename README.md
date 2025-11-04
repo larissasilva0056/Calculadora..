@@ -1,87 +1,82 @@
-Calculadora Científica em C
-Descrição do Projeto
+Calculadora Científica 2.0 em C
+Este projeto implementa uma calculadora científica completa em linguagem C, focada em atender aos requisitos de modularidade, cobertura funcional e qualidade de código. O projeto inclui operações básicas, funções trigonométricas, estatísticas, manipulação de matrizes e um sistema de histórico com persistência em arquivo.
 
-Este projeto é uma calculadora científica completa, desenvolvida em linguagem C, com suporte para:
+Funcionalidades Principais
+A calculadora oferece um menu interativo com as seguintes funcionalidades:
 
-Operações básicas (soma, subtração, multiplicação, divisão)
-Operações avançadas (potência, raiz, logaritmo, fatorial)
-Funções estatísticas (média, mediana, desvio-padrão)
-Funções trigonométricas (seno, cosseno, tangente)
-Operações com matrizes 2x2 e 3x3
-Conversões entre graus e radianos
-Armazenamento e exibição de histórico persistente (salvo em arquivo .txt)
+Operações Básicas e Científicas
+Soma, Subtração, Multiplicação, Divisão
 
-O código é modular, bem comentado e organizado em funções, com uso de structs, arrays, e arquivos para persistência de dados.
+Potência (pow), Raiz Quadrada (sqrt)
 
- Funcionalidades Principais
-Categoria	Funções Implementadas
-Básicas	Soma, Subtração, Multiplicação, Divisão
-Avançadas	Potência, Raiz quadrada, Fatorial, Logaritmo
-Estatísticas	Média, Mediana, Desvio Padrão
-Trigonométricas	Seno, Cosseno, Tangente
-Comparação	Máximo, Mínimo
-Inteiras	MDC, MMC
-Conversões	Graus ↔ Radianos
-Matrizes	Soma e multiplicação de matrizes 2x2 e 3x3
-Extras	Histórico de operações salvo em historico.txt
- Estrutura do Código
+Seno, Cosseno, Tangente (em graus)
 
-Operacao: estrutura (struct) que armazena os dados de cada operação
+Logaritmo na base 10 (log10), Logaritmo natural (ln)
 
-Funções matemáticas separadas por tipo
+Exponencial (exp), Valor Absoluto (fabs)
 
-Funções para manipulação de matrizes
+Máximo (max), Mínimo (min)
 
-Sistema de menu interativo com loop do...while
+Fatorial (limitado a n <= 20)
 
-Histórico de operações armazenado em:
+MMC (Mínimo Múltiplo Comum), MDC (Máximo Divisor Comum)
 
-vetor historico[MAX_OPERACOES]
+Conversão de Graus para Radianos e vice-versa
 
-arquivo historico.txt (persistência entre execuções)
+Cálculo de Hipotenusa
+
+Estatística (Uso de Arrays)
+Média Aritmética
+
+Mediana (com ordenação interna)
+
+Desvio Padrão
+
+Matrizes (2x2)
+Soma de Matrizes 2x2
+
+Multiplicação de Matrizes 2x2
+
+Sistema e Histórico (Uso de Structs)
+Histórico de Operações: Armazena o tipo de operação, operandos e resultado em um struct (Operacao).
+
+Exibição do Histórico.
+
+Bônus Implementados
+O projeto inclui funcionalidades extras para a obtenção de pontos bônus:
+
+Persistência do Histórico: O histórico de operações é salvo em um arquivo binário (historico_calculadora.bin) ao sair e é carregado automaticamente ao iniciar a calculadora.
+
+Matrizes 3x3: Adicionadas as operações de Soma e Multiplicação para matrizes de dimensão 3x3.
 
 Como Compilar e Executar
-Compilar no terminal:
-gcc calculadora.c -o calculadora -lm
+Para compilar e rodar a calculadora, é necessário ter um compilador C compatível com o padrão C99/C11 (como o GCC) instalado.
 
+O código utiliza funções da biblioteca matemática (<math.h>), portanto, é crucial linkar o programa com a flag -lm.
 
-O parâmetro -lm é necessário para incluir a biblioteca matemática (math.h).
+Compilação (Linux/macOS/WSL)
+Baixe o arquivo main.c (ou clone o repositório).
 
-Executar:
+Abra o terminal na pasta do projeto.
+
+Compile usando o comando:
+
+Bash
+gcc -std=c99 main.c -o calculadora -lm
+O flag -lm é obrigatório para as funções matemáticas.
+
+Execução
+Execute o programa compilado:
+
+Bash
 ./calculadora
+Execução no GDB (Para Debug)
+Para executar com o GNU Debugger, compile com a flag -g:
 
-Requisitos
+Bash
+gcc -std=c99 main.c -o calculadora -lm -g
+gdb calculadora
+(gdb) run
 
-Compilador C (GCC recomendado)
-
-Sistema operacional Windows, Linux ou macOS
-
-Biblioteca padrão math.h (já inclusa no GCC)
-
-Histórico Persistente
-
-Cada operação realizada é salva automaticamente no arquivo historico.txt.
-Mesmo após fechar o programa, o histórico é recarregado na próxima execução.
-
-Exemplo do arquivo:
-
-1;Soma;5.00;2.00;7.00
-2;Raiz;9.00;0.00;3.00
-3;Média;4.00;6.00;5.00
-
-Exemplo de Uso
---- Calculadora Científica ---
-1. Soma
-2. Subtração
-3. Multiplicação
-4. Divisão
-...
-Escolha uma opção: 1
-
-Digite o primeiro número: 8
-Digite o segundo número: 4
-Resultado: 12.00
-
-integrantes do grupo:
-Pedro, Larisssa e Vitoria
-
+Documentação do Código
+Todas as funções do arquivo main.c estão devidamente comentadas e documentadas para explicar seus parâmetros, propósito e tratamento de exceções (divisão por zero, raiz de negativo, etc.), cumprindo o requisito de qualidade e documentação.
