@@ -13,7 +13,7 @@ Armazenamento e exibição de histórico persistente (salvo em arquivo .txt)
 
 O código é modular, bem comentado e organizado em funções, com uso de structs, arrays, e arquivos para persistência de dados.
 
-💡 Funcionalidades Principais
+ Funcionalidades Principais
 Categoria	Funções Implementadas
 Básicas	Soma, Subtração, Multiplicação, Divisão
 Avançadas	Potência, Raiz quadrada, Fatorial, Logaritmo
@@ -24,7 +24,7 @@ Inteiras	MDC, MMC
 Conversões	Graus ↔ Radianos
 Matrizes	Soma e multiplicação de matrizes 2x2 e 3x3
 Extras	Histórico de operações salvo em historico.txt
-🧠 Estrutura do Código
+ Estrutura do Código
 
 Operacao: estrutura (struct) que armazena os dados de cada operação
 
