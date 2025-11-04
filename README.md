@@ -1,96 +1,87 @@
-# Calculadora Científica em C – Versão 2.0
+Calculadora Científica em C
+Descrição do Projeto
 
-## Descrição do Projeto
+Este projeto é uma calculadora científica completa, desenvolvida em linguagem C, com suporte para:
 
-Este projeto implementa uma **calculadora científica modular em C**, com **20 funções matemáticas**, **arrays**, **structs para histórico de operações**, **menu interativo** e **tratamento de erros**. O objetivo é combinar operações básicas, avançadas e manipulação de matrizes, oferecendo um histórico das últimas operações realizadas.
+Operações básicas (soma, subtração, multiplicação, divisão)
+Operações avançadas (potência, raiz, logaritmo, fatorial)
+Funções estatísticas (média, mediana, desvio-padrão)
+Funções trigonométricas (seno, cosseno, tangente)
+Operações com matrizes 2x2 e 3x3
+Conversões entre graus e radianos
+Armazenamento e exibição de histórico persistente (salvo em arquivo .txt)
 
-O projeto foi desenvolvido de forma **modular**, separando funções de cálculo e de entrada/saída, garantindo legibilidade e fácil manutenção.
+O código é modular, bem comentado e organizado em funções, com uso de structs, arrays, e arquivos para persistência de dados.
 
-## Funcionalidades
+💡 Funcionalidades Principais
+Categoria	Funções Implementadas
+Básicas	Soma, Subtração, Multiplicação, Divisão
+Avançadas	Potência, Raiz quadrada, Fatorial, Logaritmo
+Estatísticas	Média, Mediana, Desvio Padrão
+Trigonométricas	Seno, Cosseno, Tangente
+Comparação	Máximo, Mínimo
+Inteiras	MDC, MMC
+Conversões	Graus ↔ Radianos
+Matrizes	Soma e multiplicação de matrizes 2x2 e 3x3
+Extras	Histórico de operações salvo em historico.txt
+🧠 Estrutura do Código
 
-### Operações básicas:
-- Soma  
-- Subtração  
-- Multiplicação  
-- Divisão (com verificação de divisão por zero)
+Operacao: estrutura (struct) que armazena os dados de cada operação
 
-### Operações matemáticas adicionais:
-- Potência  
-- Raiz quadrada  
-- Fatorial  
-- Média  
-- Mediana  
-- Desvio-padrão  
-- Máximo  
-- Mínimo  
-- MDC e MMC  
-- Logaritmo natural  
-- Trigonometria: seno, cosseno e tangente  
-- Conversões: graus ↔ radianos  
+Funções matemáticas separadas por tipo
 
-### Operações com matrizes 2x2:
-- Soma de matrizes  
-- Multiplicação de matrizes  
+Funções para manipulação de matrizes
 
-### Histórico de operações:
-- Armazenamento das últimas N operações usando `struct Operacao`  
-- Registro de tipo de operação, operandos, resultado e ID  
-- Exibição completa do histórico  
+Sistema de menu interativo com loop do...while
 
-## Estrutura do Código
+Histórico de operações armazenado em:
 
-- **Struct `Operacao`**: armazena as informações de cada operação realizada.  
-- **Arrays**: usados para cálculos de média, mediana e desvio-padrão.  
-- **Funções separadas**: cálculo e entrada/saída são tratados em funções diferentes, garantindo modularidade.  
-- **Menu interativo**: usa `while + switch` para navegação.  
-- **Validação de entradas**: tratamento de erros como divisão por zero, log de número não positivo e raiz de número negativo.
+vetor historico[MAX_OPERACOES]
 
-## Como Compilar e Executar
+arquivo historico.txt (persistência entre execuções)
 
-### Compilação no GDB:
+Como Compilar e Executar
+Compilar no terminal:
+gcc calculadora.c -o calculadora -lm
 
-```bash
-gcc -Wall -Wextra -o calculadora calculadora.c -lm
-```
 
-### Rodando no GDB:
+O parâmetro -lm é necessário para incluir a biblioteca matemática (math.h).
 
-```bash
-gdb ./calculadora
-(gdb) run
-```
+Executar:
+./calculadora
 
-## Exemplo de Uso
+Requisitos
 
-1. Executar o programa  
-2. Escolher uma opção do menu (ex.: 1 para soma)  
-3. Inserir os operandos conforme solicitado  
-4. Visualizar resultado  
-5. Consultar histórico das operações realizadas  
+Compilador C (GCC recomendado)
 
-## Histórico de Operações
+Sistema operacional Windows, Linux ou macOS
 
-Cada operação realizada é armazenada em um **histórico** que contém:
-- ID da operação  
-- Tipo (ex.: “Soma”, “MDC”, “Seno”)  
-- Operandos  
-- Resultado  
+Biblioteca padrão math.h (já inclusa no GCC)
 
-Exemplo de saída do histórico:
+Histórico Persistente
 
-```
-[1] Soma: 5.00 e 3.00 = 8.00
-[2] Raiz: 16.00 = 4.00
-[3] Fatorial: 5 = 120.00
-```
+Cada operação realizada é salva automaticamente no arquivo historico.txt.
+Mesmo após fechar o programa, o histórico é recarregado na próxima execução.
 
-## Estrutura de Pastas 
+Exemplo do arquivo:
 
-```
-CalculadoraC/
-│
-├── calculadora.c        # Código fonte completo
-├── README.md            # Este arquivo
-```
+1;Soma;5.00;2.00;7.00
+2;Raiz;9.00;0.00;3.00
+3;Média;4.00;6.00;5.00
 
+Exemplo de Uso
+--- Calculadora Científica ---
+1. Soma
+2. Subtração
+3. Multiplicação
+4. Divisão
+...
+Escolha uma opção: 1
+
+Digite o primeiro número: 8
+Digite o segundo número: 4
+Resultado: 12.00
+
+integrantes do grupo:
+Pedro, Larisssa e Vitoria
 
